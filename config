@@ -1,0 +1,55 @@
+[BAT]
+command=~/.config/i3blocks/batlvl
+markup=pango
+interval=10
+color=#000000
+
+[RAMSWAP]
+command=echo "Free "$(free | grep Mem | awk '{printf "%.1f\n", $4/$2 * 100.0 }')"% "$(free | grep Swap | awk '{printf "%.1f\n", $4/$2 * 100.0 }')"%"
+interval=1
+color=#000000
+
+
+[WEATHER]
+command=curl wttr.in/Tarttila?format=1
+interval=60
+color=#000000
+
+[NOTIFICATIONS]
+command=[[ -z "${BLOCK_BUTTON}" ]] && ~/.config/i3blocks/not.sh || ~/.config/i3blocks/not.sh sw
+signal=13
+interval=10
+color=#000000
+
+[BRIGHTNESS]
+command=~/.config/i3blocks/br.sh;[ $BLOCK_BUTTON == 4 ] && notify-send $BLOCK_BUTTON
+signal=12
+interval=120
+color=#000000
+
+[UPDATES]
+command=echo  $(checkupdates | wc -l);[ -z "${BLOCK_BUTTON}" ] || kitty updateAll
+markup=pango
+interval=1200
+color=#000000
+
+[SOUND]
+command=~/.config/i3blocks/sound.sh; [ $BLOCK_BUTTON == 4 ] && amixer -q set Master 4%-;[ $BLOCK_BUTTON == 5 ] && amixer -q set Master 4%+; pkill -SIGRTMIN+10 i3blocks
+interval=120
+signal=10
+markup=pango
+
+[NET NAME]
+command=echo $(iwgetid -r) ;[[ -z "${BLOCK_BUTTON}" ]] || $(echo -n $(iwgetid -r) | xclip -selection c)
+interval=10
+color=#000000
+
+[test]
+command=echo $(hostname -i) ;[[ -z "${BLOCK_BUTTON}" ]] || $(echo -n $(hostname -i) | xclip -selection c)
+color=#000000
+interval=10
+
+[TIME]
+command=echo $(date +%a) $(date +%d/%m/%y) $(date +%T);[ -z "${BLOCK_BUTTON}" ] || $(zenity --calendar)
+interval=1
+color=#000000
